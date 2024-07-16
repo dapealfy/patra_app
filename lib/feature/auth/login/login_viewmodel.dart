@@ -33,7 +33,8 @@ class LoginViewModel extends ChangeNotifier {
       //     emailController.text, passwordController.text);
       // navigatorKey.currentContext!.read<ProfileViewModel>().userModel =
       //     UserModel.fromResponse(response.data!);
-      navigatorKey.currentContext!.pushNamed(RoutesName.home);
+      // navigatorKey.currentContext!.goNamed(RoutesName.homeCustomer);
     }
+    navigatorKey.currentContext!.goNamed(RoutesName.homeCustomer);
   }
 }

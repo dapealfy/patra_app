@@ -3,5 +3,10 @@ class RoutesName {
   static const String landing = '/landing';
   static const String login = '/login';
   static const String register = '/register';
-  static const String home = '/home';
+  static const String homeCustomer = '/home-customer';
+  static const String homeOfficer = '/home-officer';
+
+  //Complaint
+  static const String createComplaint = '/create-complaint';
+  static const String updateComplaint = '/update-complaint';
 }

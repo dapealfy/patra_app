@@ -85,7 +85,14 @@ class _HomeCustomerScreenState extends State<HomeCustomerScreen> {
                     child: Material(
                       color: Colors.transparent,
                       child: InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          context.pushNamed(
+                            RoutesName.detailComplaint,
+                            queryParameters: {
+                              'complaintId': '1',
+                            },
+                          );
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(18),
                           child: Row(

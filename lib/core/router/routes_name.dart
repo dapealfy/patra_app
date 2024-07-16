@@ -8,5 +8,6 @@ class RoutesName {
 
   //Complaint
   static const String createComplaint = '/create-complaint';
+  static const String detailComplaint = '/detail-complaint';
   static const String updateComplaint = '/update-complaint';
 }

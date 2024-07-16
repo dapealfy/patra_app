@@ -2,6 +2,7 @@ import 'package:app/core/router/routes_name.dart';
 import 'package:app/feature/auth/login/login_screen.dart';
 import 'package:app/feature/auth/register/register_screen.dart';
 import 'package:app/feature/home/complaint/create_complaint_screen.dart';
+import 'package:app/feature/home/complaint/detail_complaint_screen.dart';
 import 'package:app/feature/home/home_customer_screen.dart';
 import 'package:app/feature/onboarding/first_screen.dart';
 import 'package:app/feature/onboarding/landing_screen.dart';
@@ -43,6 +44,13 @@ final routesConfig =
         path: 'create-complaint',
         name: RoutesName.createComplaint,
         builder: (context, state) => const CreateComplaintScreen(),
+      ),
+      GoRoute(
+        path: 'detail-complaint',
+        name: RoutesName.detailComplaint,
+        builder: (context, state) => DetailComplaintScreen(
+          complaintId: state.pathParameters['complaintId'].toString(),
+        ),
       ),
     ],
   ),

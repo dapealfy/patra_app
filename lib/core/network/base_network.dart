@@ -18,10 +18,6 @@ class BaseNetwork {
   String baseUrl = '';
 
   Map<String, String> get baseHeader => {'Accept': 'application/json'};
-  Map<String, String> get feedsHeader => {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      };
 
   Future<Map<String, String>> get baseOption async => {
         'Accept': 'application/json',
@@ -35,7 +31,7 @@ class BaseNetwork {
     required Map<String, String>? options,
     M,
     queryParameters,
-    bool showSnackbarError = false,
+    bool showSnackbarError = true,
     String? errorTitle,
     bool? overrideUrl,
   }) async {
@@ -77,7 +73,7 @@ class BaseNetwork {
     required Map<String, String>? options,
     dynamic body,
     List<FileModel?>? files,
-    bool showSnackbarError = false,
+    bool showSnackbarError = true,
     String? errorTitle,
   }) async {
     if (files != null) {
@@ -160,7 +156,7 @@ class BaseNetwork {
     required Map<String, String>? options,
     dynamic body,
     String? errorTitle,
-    bool showSnackbarError = false,
+    bool showSnackbarError = true,
   }) async {
     final client = http.Client();
     final request = client.put(

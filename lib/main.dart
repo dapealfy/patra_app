@@ -1,19 +1,25 @@
+import 'dart:io';
+
+import 'package:app/core/network/base_network.dart';
+import 'package:app/core/router/routes_config.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  HttpOverrides.global = CoreHttpOverrides();
+  runApp(const App());
 }
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class App extends StatelessWidget {
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      home: Container(),
+    return MaterialApp.router(
+      title: 'Pengaduan Keluhan Aset',
+      routerConfig: routesConfig,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

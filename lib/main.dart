@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:app/core/network/base_network.dart';
 import 'package:app/core/router/routes_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   HttpOverrides.global = CoreHttpOverrides();
@@ -16,10 +17,17 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Pengaduan Keluhan Aset',
-      routerConfig: routesConfig,
-      debugShowCheckedModeBanner: false,
-    );
+    return ScreenUtilInit(
+        minTextAdapt: true,
+        designSize: const Size(360, 640),
+        splitScreenMode: false,
+        useInheritedMediaQuery: true,
+        builder: (ctx, child) {
+          return MaterialApp.router(
+            title: 'Pengaduan Keluhan Aset',
+            routerConfig: routesConfig,
+            debugShowCheckedModeBanner: false,
+          );
+        });
   }
 }

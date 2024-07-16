@@ -1,14 +1,13 @@
 import 'package:app/core/response/json_response.dart';
 import 'package:app/data/auth/network/auth_network.dart';
-import 'package:app/data/auth/network/dto_post_user_login_response.dart';
-import 'package:app/data/auth/network/dto_post_user_register_response.dart';
+import 'package:app/data/auth/network/dto_post_user_response.dart';
 
 class AuthRepository {
   final AuthNetwork _authNetwork;
 
   AuthRepository(this._authNetwork);
 
-  Future<JsonResponse<PostUserRegisterResponse>> registerUser(
+  Future<JsonResponse<PostUserResponse>> registerUser(
     String name,
     String email,
     String nik,
@@ -21,7 +20,7 @@ class AuthRepository {
         password,
       );
 
-  Future<JsonResponse<PostUserLoginResponse>> loginUser(
+  Future<JsonResponse<PostUserResponse>> loginUser(
     String email,
     String password,
   ) async =>

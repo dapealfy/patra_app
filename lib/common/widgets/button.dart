@@ -10,16 +10,24 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: const BoxDecoration(
         color: primaryBlue,
       ),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-      child: Center(
-        child: Text(
-          title,
-          style: AppTextStyles.body1
-              .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+            child: Center(
+              child: Text(
+                title,
+                style: AppTextStyles.body1
+                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
         ),
       ),
     );

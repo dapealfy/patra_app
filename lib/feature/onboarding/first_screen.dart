@@ -46,7 +46,7 @@ class FirstScreen extends StatelessWidget {
               width: 250,
               child: PrimaryButton(
                 title: 'MULAI',
-                onPressed: () => context.pushNamed(RoutesName.landing),
+                onPressed: () => context.goNamed(RoutesName.landing),
               ),
             ),
             const Spacer(),

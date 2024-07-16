@@ -1,4 +1,6 @@
-import 'package:app/data/auth/network/dto_post_user_register_response.dart';
+
+
+import 'package:app/data/auth/network/dto_post_user_response.dart';
 
 /// User Profile rich object model, contains sensible default value.
 /// for DTO, look at [PostUserRegisterResponse]
@@ -17,7 +19,7 @@ class UserModel {
     required this.role,
   });
 
-  factory UserModel.fromResponse(PostUserRegisterResponse response) {
+  factory UserModel.fromResponse(PostUserResponse response) {
     return UserModel(
       userId: response.userId ?? -1,
       email: response.email ?? '',
@@ -27,8 +29,8 @@ class UserModel {
     );
   }
 
-  PostUserRegisterResponse toResponse() {
-    return PostUserRegisterResponse(
+  PostUserResponse toResponse() {
+    return PostUserResponse(
       userId: userId,
       email: email,
       name: name,

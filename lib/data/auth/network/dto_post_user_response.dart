@@ -1,12 +1,12 @@
 import 'package:app/core/type_defs.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'dto_post_user_login_response.g.dart';
+part 'dto_post_user_response.g.dart';
 
 @JsonSerializable()
-class PostUserLoginResponse {
+class PostUserResponse {
   @JsonKey(name: 'user_id')
-  final String? userId;
+  final int? userId;
   @JsonKey(name: 'name')
   final String? name;
   @JsonKey(name: 'email')
@@ -16,7 +16,7 @@ class PostUserLoginResponse {
   @JsonKey(name: 'role')
   final String? role;
 
-  PostUserLoginResponse({
+  PostUserResponse({
     this.userId,
     this.name,
     this.email,
@@ -24,7 +24,7 @@ class PostUserLoginResponse {
     this.role,
   });
 
-  factory PostUserLoginResponse.fromJson(Json json) => _$PostUserLoginResponseFromJson(json);
+  factory PostUserResponse.fromJson(Json json) => _$PostUserResponseFromJson(json);
 
-  Json toJson() => _$PostUserLoginResponseToJson(this);
+  Json toJson() => _$PostUserResponseToJson(this);
 }

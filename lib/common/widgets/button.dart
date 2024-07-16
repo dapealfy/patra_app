@@ -1,6 +1,5 @@
 import 'package:app/common/colors.dart';
 import 'package:app/common/text_styles.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {

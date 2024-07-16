@@ -4,7 +4,6 @@ import 'package:app/common/widgets/button.dart';
 import 'package:app/common/widgets/textfield.dart';
 import 'package:app/feature/home/complaint/create_complaint_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class CreateComplaintScreen extends StatelessWidget {

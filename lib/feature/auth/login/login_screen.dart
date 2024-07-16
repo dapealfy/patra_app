@@ -3,7 +3,6 @@ import 'package:app/common/text_styles.dart';
 import 'package:app/common/widgets/button.dart';
 import 'package:app/common/widgets/textfield.dart';
 import 'package:app/feature/auth/login/login_viewmodel.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';

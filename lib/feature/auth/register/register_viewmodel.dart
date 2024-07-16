@@ -1,15 +1,10 @@
-import 'package:app/core/di/service_locator.dart';
 import 'package:app/core/router/routes_name.dart';
-import 'package:app/data/auth/model/user_model.dart';
-import 'package:app/data/auth/repository/auth_repository.dart';
-import 'package:app/feature/profile/profile_viewmodel.dart';
 import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 class RegisterViewModel extends ChangeNotifier {
-  late final AuthRepository _authRepository = serviceLocator.get();
+  // late final AuthRepository _authRepository = serviceLocator.get();
 
   TextEditingController nameController = TextEditingController();
   TextEditingController nikController = TextEditingController();

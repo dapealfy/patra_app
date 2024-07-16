@@ -24,6 +24,7 @@ class _HomeCustomerScreenState extends State<HomeCustomerScreen> {
           'HOME',
           style: AppTextStyles.body1.copyWith(
             color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,

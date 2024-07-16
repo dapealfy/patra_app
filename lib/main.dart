@@ -27,6 +27,9 @@ class App extends StatelessWidget {
             title: 'Pengaduan Keluhan Aset',
             routerConfig: routesConfig,
             debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              useMaterial3: true,
+            ),
           );
         });
   }

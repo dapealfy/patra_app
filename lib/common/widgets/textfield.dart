@@ -8,6 +8,7 @@ class AppTextField extends StatelessWidget {
   final bool? isSuffixIconVisible;
   final VoidCallback? onTapSuffix;
   final String hintText;
+  final int maxLines;
   const AppTextField({
     super.key,
     required this.controller,
@@ -15,6 +16,7 @@ class AppTextField extends StatelessWidget {
     this.obscureText = false,
     this.isSuffixIconVisible,
     this.onTapSuffix,
+    this.maxLines = 1,
   });
 
   @override
@@ -23,6 +25,7 @@ class AppTextField extends StatelessWidget {
       color: backgroundBlue,
       child: TextField(
         controller: controller,
+        maxLines: maxLines,
         obscureText: obscureText,
         decoration: InputDecoration(
           hintText: hintText,

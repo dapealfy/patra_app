@@ -1,13 +1,21 @@
+import 'package:app/core/di/service_locator.dart';
 import 'package:app/core/router/routes_name.dart';
+import 'package:app/core/storage/local_storage.dart';
+import 'package:app/data/auth/model/user_model.dart';
+import 'package:app/data/auth/repository/auth_repository.dart';
+import 'package:app/feature/profile/profile_viewmodel.dart';
 import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:logger/web.dart';
+import 'package:provider/provider.dart';
 
 class LoginViewModel extends ChangeNotifier {
-  // late final AuthRepository _authRepository = serviceLocator.get();
+  late final AuthRepository _authRepository = serviceLocator.get();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  LocalStorageService storage = LocalStorageService.instance;
 
   bool _obscureText = true;
   bool get obscureText => _obscureText;
@@ -24,12 +32,14 @@ class LoginViewModel extends ChangeNotifier {
     if (emailController.text.isNotEmpty &&
         isEmailValid &&
         passwordController.text.length >= 8) {
-      // final response = await _authRepository.loginUser(
-      //     emailController.text, passwordController.text);
-      // navigatorKey.currentContext!.read<ProfileViewModel>().userModel =
-      //     UserModel.fromResponse(response.data!);
-      // navigatorKey.currentContext!.goNamed(RoutesName.homeCustomer);
+      final response = await _authRepository.loginUser(
+          emailController.text, passwordController.text);
+      navigatorKey.currentContext!.read<ProfileViewModel>().userModel =
+          UserModel.fromResponse(response.data!);
+      storage.setToken(response.jsonBody!['access_token']);
+      if (response.statCode == 200) {
+        navigatorKey.currentContext!.goNamed(RoutesName.homeCustomer);
+      }
     }
-    navigatorKey.currentContext!.goNamed(RoutesName.homeCustomer);
   }
 }

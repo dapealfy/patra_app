@@ -1,6 +1,7 @@
 import 'package:app/common/colors.dart';
 import 'package:app/common/text_styles.dart';
 import 'package:app/core/router/routes_name.dart';
+import 'package:app/core/storage/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -27,6 +28,19 @@ class _HomeCustomerScreenState extends State<HomeCustomerScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              LocalStorageService storage = LocalStorageService.instance;
+              storage.deleteAll();
+              context.goNamed(RoutesName.landing);
+            },
+            icon: const Icon(
+              Icons.logout,
+              color: Colors.white,
+            ),
+          ),
+        ],
         centerTitle: true,
       ),
       body: Column(

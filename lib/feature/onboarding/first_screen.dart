@@ -2,13 +2,33 @@ import 'package:app/app/assets.dart';
 import 'package:app/common/colors.dart';
 import 'package:app/common/text_styles.dart';
 import 'package:app/common/widgets/button.dart';
+import 'package:app/core/constant/storage_key.dart';
 import 'package:app/core/router/routes_name.dart';
+import 'package:app/core/storage/local_storage.dart';
+import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class FirstScreen extends StatelessWidget {
+class FirstScreen extends StatefulWidget {
   const FirstScreen({super.key});
+
+  @override
+  State<FirstScreen> createState() => _FirstScreenState();
+}
+
+class _FirstScreenState extends State<FirstScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(const Duration(milliseconds: 200), () async {
+      LocalStorageService storage = LocalStorageService.instance;
+      if (await storage.getToken() != null) {
+        navigatorKey.currentContext?.goNamed(RoutesName.homeCustomer);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +76,9 @@ class FirstScreen extends StatelessWidget {
                   'By',
                   style: AppTextStyles.caption2.copyWith(color: secondary),
                 ),
-                const SizedBox(width: 8,),
+                const SizedBox(
+                  width: 8,
+                ),
                 Image.asset(
                   AppAssets.patraJasa,
                   height: 12.r,

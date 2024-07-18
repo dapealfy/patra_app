@@ -19,17 +19,11 @@ class ApiResponse extends Response {
   /// null if body is not JSON
   late final Json? jsonBody = _decodeToJsonOrNull(body);
 
-  dynamic get rawData => jsonBody?['data'];
+  dynamic get rawData => jsonBody;
 
   int? get statCode => jsonBody?['stat_code'];
 
-  String? get statMsg => jsonBody?['stat_msg'];
-
-  int? get code => jsonBody?['code'];
-
   String? get message => jsonBody?['message'];
-
-  dynamic get pagination => jsonBody?['pagination'];
 
   /// wrap http.Response with ApiResponse
   ApiResponse(Response response)

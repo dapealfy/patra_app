@@ -1,10 +1,15 @@
+import 'package:app/core/di/service_locator.dart';
 import 'package:app/core/router/routes_name.dart';
+import 'package:app/data/auth/model/user_model.dart';
+import 'package:app/data/auth/repository/auth_repository.dart';
+import 'package:app/feature/profile/profile_viewmodel.dart';
 import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class RegisterViewModel extends ChangeNotifier {
-  // late final AuthRepository _authRepository = serviceLocator.get();
+  late final AuthRepository _authRepository = serviceLocator.get();
 
   TextEditingController nameController = TextEditingController();
   TextEditingController nikController = TextEditingController();
@@ -26,13 +31,15 @@ class RegisterViewModel extends ChangeNotifier {
         .hasMatch(emailController.text);
     if (emailController.text.isNotEmpty &&
         isEmailValid &&
-        passwordController.text.length >= 8) {
-      // final response = await _authRepository.loginUser(
-      //     emailController.text, passwordController.text);
-      // navigatorKey.currentContext!.read<ProfileViewModel>().userModel =
-      //     UserModel.fromResponse(response.data!);
-      // navigatorKey.currentContext!.pushNamed(RoutesName.home);
+        passwordController.text.length >= 8 &&
+        passwordController.text == confirmPasswordController.text) {
+      final response = await _authRepository.registerUser(nameController.text,
+          emailController.text, nikController.text, passwordController.text);
+      navigatorKey.currentContext!.read<ProfileViewModel>().userModel =
+          UserModel.fromResponse(response.data!);
+      if (response.statCode == 200) {
+        navigatorKey.currentContext!.goNamed(RoutesName.homeCustomer);
+      }
     }
-    navigatorKey.currentContext!.goNamed(RoutesName.homeCustomer);
   }
 }

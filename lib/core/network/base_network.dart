@@ -6,6 +6,7 @@ import 'package:app/core/storage/local_storage.dart';
 import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 class BaseNetwork {
   BaseNetwork._();
@@ -15,7 +16,7 @@ class BaseNetwork {
   LocalStorageService storage = LocalStorageService.instance;
   final client = http.Client();
 
-  String baseUrl = '';
+  String baseUrl = 'http://patraland.soldigtest.my.id/';
 
   Map<String, String> get baseHeader => {'Accept': 'application/json'};
 
@@ -26,7 +27,7 @@ class BaseNetwork {
       };
 
   // METHOD GET
-  get(
+  Future<Response> get(
     String path, {
     required Map<String, String>? options,
     M,
@@ -68,7 +69,7 @@ class BaseNetwork {
   }
 
   // METHOD POST
-  post(
+  Future<Response> post(
     String path, {
     required Map<String, String>? options,
     dynamic body,
@@ -106,8 +107,16 @@ class BaseNetwork {
 
       var response = await request.send();
       final resBody = await response.stream.bytesToString();
-      if (response.statusCode == 200) {
-        return resBody;
+      if (response.statusCode == 201) {
+        return Response(
+          resBody,
+          response.statusCode,
+          request: response.request,
+          persistentConnection: response.persistentConnection,
+          reasonPhrase: response.reasonPhrase,
+          headers: response.headers,
+          isRedirect: response.isRedirect,
+        );
       } else {
         if (showSnackbarError) {
           ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
@@ -122,15 +131,23 @@ class BaseNetwork {
           );
         }
 
-        return resBody;
+        return Response(
+          resBody,
+          response.statusCode,
+          request: response.request,
+          persistentConnection: response.persistentConnection,
+          reasonPhrase: response.reasonPhrase,
+          headers: response.headers,
+          isRedirect: response.isRedirect,
+        );
       }
     } else {
       final client = http.Client();
       final request = client.post(Uri.parse(baseUrl + path), body: body);
       request.timeout(_timeout);
       final response = await request;
-      if (response.statusCode == 200) {
-        return response.body;
+      if (response.statusCode == 201) {
+        return response;
       } else {
         if (showSnackbarError) {
           ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
@@ -145,7 +162,7 @@ class BaseNetwork {
           );
         }
 
-        return response.body;
+        return response;
       }
     }
   }
@@ -169,7 +186,7 @@ class BaseNetwork {
     final response = await request;
 
     if (response.statusCode == 200) {
-      return response.body;
+      return response;
     } else {
       if (showSnackbarError) {
         ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
@@ -184,7 +201,7 @@ class BaseNetwork {
         );
       }
 
-      return response.body;
+      return response;
     }
   }
 }

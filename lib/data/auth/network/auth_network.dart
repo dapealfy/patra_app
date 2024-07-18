@@ -2,12 +2,13 @@ import 'package:app/core/network/base_network.dart';
 import 'package:app/core/response/api_response.dart';
 import 'package:app/core/response/json_response.dart';
 import 'package:app/data/auth/network/dto_post_user_response.dart';
+import 'package:http/http.dart';
 
 class AuthNetwork {
   final _network = BaseNetwork.instance;
 
-  static const _userRegister = 'user/register';
-  static const _userLogin = 'user/login';
+  static const _userRegister = 'public/api/register';
+  static const _userLogin = 'api/login';
 
   Future<JsonResponse<PostUserResponse>> postLogin(
     String email,

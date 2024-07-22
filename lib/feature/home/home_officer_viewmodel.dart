@@ -8,8 +8,9 @@ import 'package:flutter/foundation.dart';
 
 class HomeOfficerViewmodel extends ChangeNotifier {
   late final ComplaintRepository _complaintRepository = serviceLocator.get();
+  List<ComplaintModel> onGoingComplaints = [];
+  List<ComplaintModel> receiveComplaints = [];
   List<ComplaintModel> allComplaints = [];
-  ComplaintModel? selectedComplaint;
 
   Future<void> getAllComplaints() async {
     try {
@@ -27,13 +28,37 @@ class HomeOfficerViewmodel extends ChangeNotifier {
     }
   }
 
-  Future<void> getComplaintByStatus(String status) async {
-    final response = await _complaintRepository.getComplaintByStatus(status);
-    if (response.statCode == 200) {
-      final complaint =
-          GetComplaintResponse.fromJson(jsonDecode(response.body));
-      selectedComplaint = ComplaintModel.fromResponse(complaint);
-      notifyListeners();
+  Future<void> getOnGoingComplaints() async {
+    try {
+      final response =
+          await _complaintRepository.getComplaintByStatus('onGoing');
+      if (response.statCode == 200) {
+        allComplaints = List<ComplaintModel>.from(
+          jsonDecode(response.body)['data']
+              .map((e) => GetComplaintResponse.fromJson(e))
+              .map((e) => ComplaintModel.fromResponse(e)),
+        );
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<void> getReceiveComplaints() async {
+    try {
+      final response =
+          await _complaintRepository.getComplaintByStatus('receive');
+      if (response.statCode == 200) {
+        allComplaints = List<ComplaintModel>.from(
+          jsonDecode(response.body)['data']
+              .map((e) => GetComplaintResponse.fromJson(e))
+              .map((e) => ComplaintModel.fromResponse(e)),
+        );
+        notifyListeners();
+      }
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 }

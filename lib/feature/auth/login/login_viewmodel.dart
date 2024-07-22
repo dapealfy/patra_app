@@ -37,10 +37,10 @@ class LoginViewModel extends ChangeNotifier {
       navigatorKey.currentContext!.read<ProfileViewModel>().userModel =
           UserModel.fromResponse(response.data!);
       storage.setToken(response.jsonBody!['access_token']);
-      storage.setRole(response.jsonBody!['role']);
-      if (response.statCode == 200 && response.jsonBody!['role'] == 'customer') {
+      storage.setRole(response.jsonBody!['user']['role']);
+      if (response.statCode == 200 && response.jsonBody!['user']['role'] == 'customer') {
         navigatorKey.currentContext!.goNamed(RoutesName.homeCustomer);
-      } else if (response.statCode == 200 && response.jsonBody!['role'] == 'petugas') {
+      } else if (response.statCode == 200 && response.jsonBody!['user']['role'] == 'petugas') {
         navigatorKey.currentContext!.goNamed(RoutesName.homeOfficer);
       }
     }

@@ -10,7 +10,7 @@ class ComplaintNetwork {
 
   static const _getAllComplaints = 'api/complaint/get';
   static const _getComplaintById = 'api/complaint/{id}';
-  static const _getComplaintByStatus = 'api/complaint/status';
+  static const _getComplaintByStatus = 'api/complaint/officer';
   static const _createComplaint = 'api/submit-complaint';
 
   Future<JsonResponse<GetComplaintResponse>> getAllComplaints() async {
@@ -51,6 +51,32 @@ class ComplaintNetwork {
             requestName: 'complaint_asset',
             files: [
               complaintAsset.path,
+            ],
+          ),
+        ],
+        options: await _network.baseOption);
+
+    return ApiResponse.json(response, GetComplaintResponse.fromJson);
+  }
+
+  Future<JsonResponse<GetComplaintResponse>> updateComplaint({
+    required int id,
+    String? sparepart,
+    String? handlingDescription,
+    File? handlingAsset,
+    String? status,
+  }) async {
+    final response = await _network.post('$_createComplaint/$id',
+        body: {
+          'sparepart': sparepart,
+          'handling_description': handlingDescription,
+          'status': status,
+        },
+        files: [
+          FileModel(
+            requestName: 'handling_asset',
+            files: [
+              handlingAsset!.path,
             ],
           ),
         ],

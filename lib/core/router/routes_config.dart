@@ -57,32 +57,20 @@ final routesConfig =
   ),
   GoRoute(
     path: '/home-officer',
-    name: RoutesName.homeCustomer,
-    builder: (context, state) => const HomeOfficerScreen(),
-    routes: [
-      GoRoute(
-        path: 'update-complaint',
-        name: RoutesName.createComplaint,
-        builder: (context, state) => const CreateComplaintScreen(),
-      ),
-      GoRoute(
-        path: 'detail-complaint-officer',
-        name: RoutesName.detailComplaint,
-        builder: (context, state) => DetailComplaintScreen(
-          complaintId: state.uri.queryParameters['complaintId'].toString(),
-        ),
-      ),
-    ],
-  ),
-  GoRoute(
-    path: '/home-officer',
     name: RoutesName.homeOfficer,
-    builder: (context, state) => const HomeCustomerScreen(),
+    builder: (context, state) => const HomeOfficerScreen(),
     routes: [
       GoRoute(
         path: 'update-complaint',
         name: RoutesName.updateComplaint,
         builder: (context, state) => const CreateComplaintScreen(),
+      ),
+      GoRoute(
+        path: 'detail-complaint-officer',
+        name: RoutesName.detailComplaintOfficer,
+        builder: (context, state) => DetailComplaintScreen(
+          complaintId: state.uri.queryParameters['complaintId'].toString(),
+        ),
       ),
     ],
   ),

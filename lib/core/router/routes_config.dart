@@ -49,7 +49,7 @@ final routesConfig =
         path: 'detail-complaint',
         name: RoutesName.detailComplaint,
         builder: (context, state) => DetailComplaintScreen(
-          complaintId: state.pathParameters['complaintId'].toString(),
+          complaintId: state.uri.queryParameters['complaintId'].toString(),
         ),
       ),
     ],

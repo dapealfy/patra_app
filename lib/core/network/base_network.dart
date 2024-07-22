@@ -23,7 +23,7 @@ class BaseNetwork {
   Future<Map<String, String>> get baseOption async => {
         'Accept': 'application/json',
         'Authorization':
-            'Bearer ${await storage.get<String>(StorageKeyEnum.accessToken) ?? ""}',
+            'Bearer ${await storage.getToken() ?? ""}',
       };
 
   // METHOD GET

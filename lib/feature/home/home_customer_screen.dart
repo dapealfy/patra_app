@@ -120,12 +120,14 @@ class HomeCustomerScreen extends StatelessWidget {
                             color: Colors.transparent,
                             child: InkWell(
                               onTap: () {
-                                context.pushNamed(
-                                  RoutesName.detailComplaint,
-                                  queryParameters: {
-                                    'complaintId': complaintId.toString(),
-                                  },
-                                );
+                                if (complaintId != 0) {
+                                  context.pushNamed(
+                                    RoutesName.detailComplaint,
+                                    queryParameters: {
+                                      'complaintId': complaintId.toString(),
+                                    },
+                                  );
+                                }
                               },
                               child: Padding(
                                 padding: const EdgeInsets.all(18),

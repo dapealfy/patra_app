@@ -25,7 +25,11 @@ class _FirstScreenState extends State<FirstScreen> {
     Future.delayed(const Duration(milliseconds: 200), () async {
       LocalStorageService storage = LocalStorageService.instance;
       if (await storage.getToken() != null) {
-        navigatorKey.currentContext?.goNamed(RoutesName.homeCustomer);
+        if (await storage.getRole() == 'customer') {
+          navigatorKey.currentContext?.goNamed(RoutesName.homeCustomer);
+        } else {
+          navigatorKey.currentContext?.goNamed(RoutesName.homeOfficer);
+        }
       }
     });
   }

@@ -84,6 +84,7 @@ class BaseNetwork {
       );
 
       request.headers.addAll(options!);
+      request.fields.addAll(body!);
 
       for (var fileData in files) {
         if (fileData!.files.length > 1) {

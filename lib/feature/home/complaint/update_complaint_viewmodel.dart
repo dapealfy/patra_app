@@ -6,7 +6,7 @@ import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class CreateComplaintViewmodel extends ChangeNotifier {
+class UpdateComplaintViewmodel extends ChangeNotifier {
   late final ComplaintRepository _complaintRepository =
       serviceLocator<ComplaintRepository>();
   TextEditingController nomorRumahController = TextEditingController();
@@ -23,13 +23,13 @@ class CreateComplaintViewmodel extends ChangeNotifier {
 
   void submitComplaint() {
     if (complaintImage != null) {
-      _complaintRepository
-          .createComplaint(
-            homeAddress: nomorRumahController.text,
-            description: keteranganController.text,
-            complaintAsset: complaintImage!,
-          )
-          .then((value) => notifyListeners());
+      // _complaintRepository
+      //     .updateComplaint(
+      //       homeAddress: nomorRumahController.text,
+      //       description: keteranganController.text,
+      //       complaintAsset: complaintImage!,
+      //     )
+      //     .then((value) => notifyListeners());
     } else {
       ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
         const SnackBar(

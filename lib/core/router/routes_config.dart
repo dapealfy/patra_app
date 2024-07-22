@@ -4,6 +4,7 @@ import 'package:app/feature/auth/register/register_screen.dart';
 import 'package:app/feature/home/complaint/create_complaint_screen.dart';
 import 'package:app/feature/home/complaint/detail_complaint_screen.dart';
 import 'package:app/feature/home/home_customer_screen.dart';
+import 'package:app/feature/home/home_officer_screen.dart';
 import 'package:app/feature/onboarding/first_screen.dart';
 import 'package:app/feature/onboarding/landing_screen.dart';
 import 'package:app/main.dart';
@@ -47,6 +48,25 @@ final routesConfig =
       ),
       GoRoute(
         path: 'detail-complaint',
+        name: RoutesName.detailComplaint,
+        builder: (context, state) => DetailComplaintScreen(
+          complaintId: state.uri.queryParameters['complaintId'].toString(),
+        ),
+      ),
+    ],
+  ),
+  GoRoute(
+    path: '/home-officer',
+    name: RoutesName.homeCustomer,
+    builder: (context, state) => const HomeOfficerScreen(),
+    routes: [
+      GoRoute(
+        path: 'update-complaint',
+        name: RoutesName.createComplaint,
+        builder: (context, state) => const CreateComplaintScreen(),
+      ),
+      GoRoute(
+        path: 'detail-complaint-officer',
         name: RoutesName.detailComplaint,
         builder: (context, state) => DetailComplaintScreen(
           complaintId: state.uri.queryParameters['complaintId'].toString(),

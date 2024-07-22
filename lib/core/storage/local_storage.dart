@@ -21,6 +21,15 @@ class LocalStorageService {
     return data;
   }
 
+  void setRole(String role) async {
+    await _storage.write(key: 'role', value: role);
+  }
+
+  dynamic getRole() async {
+    final data = await _storage.read(key: 'role');
+    return data;
+  }
+
   ///-----------------------------------------------------------------------------
 
   /*-------------------------------TOKEN--------------------------------------------------- */

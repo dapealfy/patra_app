@@ -46,240 +46,285 @@ class HomeOfficerScreen extends StatelessWidget {
             ],
             centerTitle: true,
           ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 12.h,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'On Going',
-                  style: AppTextStyles.caption1.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              SizedBox(
-                height: 150,
-                child: ListView.separated(
-                  itemCount: vm.onGoingComplaints.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        context.pushNamed(
-                          RoutesName.detailComplaint,
-                          queryParameters: {
-                            'complaintId':
-                                vm.allComplaints[index].id.toString(),
-                          },
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 20),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    vm.onGoingComplaints[index].homeAddress,
-                                    style: AppTextStyles.body2,
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    vm.onGoingComplaints[index].description,
-                                    style: AppTextStyles.caption2,
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    vm.onGoingComplaints[index].createdAt,
-                                    style: AppTextStyles.body2
-                                        .copyWith(color: secondary),
-                                  ),
-                                ],
+          body: RefreshIndicator(
+            onRefresh: () async {
+              context.read<HomeOfficerViewmodel>()
+                ..getAllComplaints()
+                ..getOnGoingComplaints()
+                ..getReceiveComplaints();
+            },
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 12.h,
+                        ),
+                        if (vm.onGoingComplaints.isNotEmpty) ...[
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              'On Going',
+                              style: AppTextStyles.caption1.copyWith(
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            CachedNetworkImage(
-                              width: 120,
-                              height: 80,
-                              fit: BoxFit.cover,
-                              imageUrl: vm.onGoingComplaints[index].complaintAsset,
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const Divider();
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'Tugas',
-                  style: AppTextStyles.caption1.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              SizedBox(
-                height: 150,
-                child: ListView.separated(
-                  itemCount: vm.receiveComplaints.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        context.pushNamed(
-                          RoutesName.detailComplaint,
-                          queryParameters: {
-                            'complaintId':
-                                vm.allComplaints[index].id.toString(),
-                          },
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 20),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    vm.receiveComplaints[index].homeAddress,
-                                    style: AppTextStyles.body2,
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: vm.onGoingComplaints.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  context.pushNamed(
+                                    RoutesName.updateComplaint,
+                                    queryParameters: {
+                                      'complaintId': vm
+                                          .onGoingComplaints[index].id
+                                          .toString(),
+                                    },
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 20),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              vm.onGoingComplaints[index]
+                                                  .homeAddress,
+                                              style: AppTextStyles.body2,
+                                            ),
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
+                                            Text(
+                                              vm.onGoingComplaints[index]
+                                                  .description,
+                                              style: AppTextStyles.caption2,
+                                            ),
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
+                                            Text(
+                                              vm.onGoingComplaints[index]
+                                                  .createdAt,
+                                              style: AppTextStyles.body2
+                                                  .copyWith(color: secondary),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      CachedNetworkImage(
+                                        width: 120,
+                                        height: 80,
+                                        fit: BoxFit.cover,
+                                        imageUrl: vm.onGoingComplaints[index]
+                                            .complaintAsset,
+                                      ),
+                                    ],
                                   ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    vm.receiveComplaints[index].description,
-                                    style: AppTextStyles.caption2,
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    vm.receiveComplaints[index].createdAt,
-                                    style: AppTextStyles.body2
-                                        .copyWith(color: secondary),
-                                  ),
-                                ],
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return const Divider();
+                            },
+                          ),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                        ],
+                        if (vm.receiveComplaints.isNotEmpty) ...[
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              'Tugas',
+                              style: AppTextStyles.caption1.copyWith(
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                            CachedNetworkImage(
-                              width: 120,
-                              height: 80,
-                              fit: BoxFit.cover,
-                              imageUrl: vm.receiveComplaints[index].complaintAsset,
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: vm.receiveComplaints.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  context.pushNamed(
+                                    RoutesName.detailComplaint,
+                                    queryParameters: {
+                                      'complaintId': vm
+                                          .receiveComplaints[index].id
+                                          .toString(),
+                                    },
+                                  );
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 8, horizontal: 20),
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              vm.receiveComplaints[index]
+                                                  .homeAddress,
+                                              style: AppTextStyles.body2,
+                                            ),
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
+                                            Text(
+                                              vm.receiveComplaints[index]
+                                                  .description,
+                                              style: AppTextStyles.caption2,
+                                            ),
+                                            const SizedBox(
+                                              height: 4,
+                                            ),
+                                            Text(
+                                              vm.receiveComplaints[index]
+                                                  .createdAt,
+                                              style: AppTextStyles.body2
+                                                  .copyWith(color: secondary),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      CachedNetworkImage(
+                                        width: 120,
+                                        height: 80,
+                                        fit: BoxFit.cover,
+                                        imageUrl: vm.receiveComplaints[index]
+                                            .complaintAsset,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            separatorBuilder: (context, index) {
+                              return const Divider();
+                            },
+                          ),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                        ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            'Riwayat Laporan Keluhan',
+                            style: AppTextStyles.caption1.copyWith(
+                              fontWeight: FontWeight.bold,
                             ),
-                          ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const Divider();
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  'Riwayat Laporan Keluhan',
-                  style: AppTextStyles.caption1.copyWith(
-                    fontWeight: FontWeight.bold,
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: vm.allComplaints.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                context.pushNamed(
+                                  RoutesName.detailComplaint,
+                                  queryParameters: {
+                                    'complaintId':
+                                        vm.allComplaints[index].id.toString(),
+                                  },
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 20),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            vm.allComplaints[index].homeAddress,
+                                            style: AppTextStyles.body2,
+                                          ),
+                                          const SizedBox(
+                                            height: 4,
+                                          ),
+                                          Text(
+                                            vm.allComplaints[index].description,
+                                            style: AppTextStyles.caption2,
+                                          ),
+                                          const SizedBox(
+                                            height: 4,
+                                          ),
+                                          Text(
+                                            vm.allComplaints[index].createdAt,
+                                            style: AppTextStyles.body2
+                                                .copyWith(color: secondary),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    CachedNetworkImage(
+                                      width: 120,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                      imageUrl: vm
+                                          .allComplaints[index].complaintAsset,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          separatorBuilder: (context, index) {
+                            return const Divider();
+                          },
+                        ),
+                        if (vm.allComplaints.isEmpty)
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Tidak ada laporan keluhan',
+                                  style: AppTextStyles.caption2,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Expanded(
-                child: ListView.separated(
-                  itemCount: vm.allComplaints.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        context.pushNamed(
-                          RoutesName.detailComplaint,
-                          queryParameters: {
-                            'complaintId':
-                                vm.allComplaints[index].id.toString(),
-                          },
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 20),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    vm.allComplaints[index].homeAddress,
-                                    style: AppTextStyles.body2,
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    vm.allComplaints[index].description,
-                                    style: AppTextStyles.caption2,
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    vm.allComplaints[index].createdAt,
-                                    style: AppTextStyles.body2
-                                        .copyWith(color: secondary),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            CachedNetworkImage(
-                              width: 120,
-                              height: 80,
-                              fit: BoxFit.cover,
-                              imageUrl: vm.allComplaints[index].complaintAsset,
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const Divider();
-                  },
-                ),
-              )
-            ],
+              ],
+            ),
           ),
         );
       }),

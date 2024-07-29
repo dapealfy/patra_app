@@ -69,17 +69,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                Selector<LoginViewModel, Function>(
-                    selector: (_, vm) => vm.login,
-                    builder: (_, login, __) {
-                      return SizedBox(
-                        width: 250,
-                        child: PrimaryButton(
-                          title: 'MASUK',
-                          onPressed: () => login(),
-                        ),
-                      );
-                    }),
+                Consumer<LoginViewModel>(builder: (_, loginVm, __) {
+                  return SizedBox(
+                    width: 250,
+                    child: PrimaryButton(
+                      title: 'MASUK',
+                      isLoading: loginVm.isLoading,
+                      onPressed: () => loginVm.login(),
+                    ),
+                  );
+                }),
                 SizedBox(
                   height: 70.h,
                 ),

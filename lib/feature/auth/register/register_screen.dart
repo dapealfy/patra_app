@@ -105,14 +105,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
-                Selector<RegisterViewModel, Function>(
-                    selector: (_, vm) => vm.register,
-                    builder: (_, register, __) {
+                Consumer<RegisterViewModel>(
+                    builder: (_, registerVm, __) {
                       return SizedBox(
                         width: 250,
                         child: PrimaryButton(
                           title: 'MASUK',
-                          onPressed: () => register(),
+                          isLoading: registerVm.isLoading,
+                          onPressed: () => registerVm.register(),
                         ),
                       );
                     }),

@@ -4,14 +4,19 @@ import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
   final VoidCallback? onPressed;
+  final bool isLoading;
   final String title;
-  const PrimaryButton({super.key, this.onPressed, required this.title});
+  const PrimaryButton(
+      {super.key,
+      this.onPressed,
+      required this.title,
+      this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
-      decoration: const BoxDecoration(
-        color: primaryBlue,
+      decoration:  BoxDecoration(
+        color: isLoading == true ? backgroundDark : primaryBlue,
       ),
       child: Material(
         color: Colors.transparent,
@@ -20,11 +25,13 @@ class PrimaryButton extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
             child: Center(
-              child: Text(
-                title,
-                style: AppTextStyles.body1
-                    .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
+              child: isLoading
+                  ? const CircularProgressIndicator()
+                  : Text(
+                      title,
+                      style: AppTextStyles.body1.copyWith(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
             ),
           ),
         ),

@@ -29,4 +29,21 @@ class ComplaintRepository {
         description: description,
         complaintAsset: complaintAsset,
       );
+
+  Future<JsonResponse<GetComplaintResponse>> updateComplaint({
+    required int id,
+    required String sparepart,
+    required String handlingDescription,
+    required File handlingAsset,
+  }) async =>
+      await _complaintNetwork.updateComplaint(
+        sparepart: sparepart,
+        handlingDescription: handlingDescription,
+        handlingAsset: handlingAsset,
+        id: id,
+        status: 'done',
+      );
+
+  Future<JsonResponse<GetComplaintResponse>> acceptComplaint(int id) async =>
+      await _complaintNetwork.acceptComplaint(id);
 }

@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
-import 'package:app/core/constant/storage_key.dart';
 import 'package:app/core/storage/local_storage.dart';
 import 'package:app/main.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +20,7 @@ class BaseNetwork {
 
   Future<Map<String, String>> get baseOption async => {
         'Accept': 'application/json',
-        'Authorization':
-            'Bearer ${await storage.getToken() ?? ""}',
+        'Authorization': 'Bearer ${await storage.getToken() ?? ""}',
       };
 
   // METHOD GET
@@ -32,7 +29,7 @@ class BaseNetwork {
     required Map<String, String>? options,
     M,
     queryParameters,
-    bool showSnackbarError = true,
+    bool showSnackbarError = false,
     String? errorTitle,
     bool? overrideUrl,
   }) async {
@@ -74,7 +71,7 @@ class BaseNetwork {
     required Map<String, String>? options,
     dynamic body,
     List<FileModel?>? files,
-    bool showSnackbarError = true,
+    bool showSnackbarError = false,
     String? errorTitle,
   }) async {
     if (files != null) {
@@ -144,7 +141,11 @@ class BaseNetwork {
       }
     } else {
       final client = http.Client();
-      final request = client.post(Uri.parse(baseUrl + path), body: body);
+      final request = client.post(
+        Uri.parse(baseUrl + path),
+        body: body,
+        headers: options,
+      );
       request.timeout(_timeout);
       final response = await request;
       if (response.statusCode == 201) {

@@ -115,12 +115,12 @@ class CreateComplaintScreen extends StatelessWidget {
                 const SizedBox(
                   height: 24,
                 ),
-                Selector<CreateComplaintViewmodel, Function>(
-                  selector: (_, vm) => vm.submitComplaint,
-                  builder: (_, submitComplaint, __) {
+                Consumer<CreateComplaintViewmodel>(
+                  builder: (_, submitComplaintVm, __) {
                     return PrimaryButton(
                       title: 'KIRIM',
-                      onPressed: () => submitComplaint(),
+                      isLoading: submitComplaintVm.isLoading,
+                      onPressed: () => submitComplaintVm.submitComplaint(),
                     );
                   },
                 ),

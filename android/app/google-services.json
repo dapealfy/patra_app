@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "350539089457",
+    "project_id": "patraland-4e4af",
+    "storage_bucket": "patraland-4e4af.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:350539089457:android:40426aeed955e47b3ff710",
+        "android_client_info": {
+          "package_name": "com.patra.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBD4M6oaZI351Jy_fitbHpD_OFYT_Qc-iQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

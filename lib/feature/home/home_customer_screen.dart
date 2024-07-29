@@ -171,64 +171,71 @@ class HomeCustomerScreen extends StatelessWidget {
                 height: 16,
               ),
               Expanded(
-                child: ListView.separated(
-                  itemCount: vm.allComplaints.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        context.pushNamed(
-                          RoutesName.detailComplaint,
-                          queryParameters: {
-                            'complaintId':
-                                vm.allComplaints[index].id.toString(),
-                          },
-                        );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 20),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    vm.allComplaints[index].homeAddress,
-                                    style: AppTextStyles.body2,
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    vm.allComplaints[index].description,
-                                    style: AppTextStyles.caption2,
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    vm.allComplaints[index].createdAt,
-                                    style: AppTextStyles.body2
-                                        .copyWith(color: secondary),
-                                  ),
-                                ],
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    await context.read<HomeCustomerViewmodel>().getAllComplaints();
+                  },
+                  child: ListView.separated(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    itemCount: vm.allComplaints.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          context.pushNamed(
+                            RoutesName.detailComplaint,
+                            queryParameters: {
+                              'complaintId':
+                                  vm.allComplaints[index].id.toString(),
+                            },
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 20),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      vm.allComplaints[index].homeAddress,
+                                      style: AppTextStyles.body2,
+                                    ),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      vm.allComplaints[index].description,
+                                      style: AppTextStyles.caption2,
+                                    ),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      vm.allComplaints[index].createdAt,
+                                      style: AppTextStyles.body2
+                                          .copyWith(color: secondary),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            CachedNetworkImage(
-                              width: 120,
-                              height: 80,
-                              fit: BoxFit.cover,
-                              imageUrl: vm.allComplaints[index].complaintAsset,
-                            ),
-                          ],
+                              CachedNetworkImage(
+                                width: 120,
+                                height: 80,
+                                fit: BoxFit.cover,
+                                imageUrl:
+                                    vm.allComplaints[index].complaintAsset,
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const Divider();
-                  },
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const Divider();
+                    },
+                  ),
                 ),
               )
             ],

@@ -25,6 +25,14 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
   void login() async {
     bool isEmailValid = RegExp(
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -32,15 +40,19 @@ class LoginViewModel extends ChangeNotifier {
     if (emailController.text.isNotEmpty &&
         isEmailValid &&
         passwordController.text.length >= 8) {
+      isLoading = true;
       final response = await _authRepository.loginUser(
           emailController.text, passwordController.text);
       navigatorKey.currentContext!.read<ProfileViewModel>().userModel =
           UserModel.fromResponse(response.data!);
       storage.setToken(response.jsonBody!['access_token']);
       storage.setRole(response.jsonBody!['user']['role']);
-      if (response.statCode == 200 && response.jsonBody!['user']['role'] == 'customer') {
+      isLoading = false;
+      if (response.statCode == 200 &&
+          response.jsonBody!['user']['role'] == 'customer') {
         navigatorKey.currentContext!.goNamed(RoutesName.homeCustomer);
-      } else if (response.statCode == 200 && response.jsonBody!['user']['role'] == 'petugas') {
+      } else if (response.statCode == 200 &&
+          response.jsonBody!['user']['role'] == 'petugas') {
         navigatorKey.currentContext!.goNamed(RoutesName.homeOfficer);
       }
     }

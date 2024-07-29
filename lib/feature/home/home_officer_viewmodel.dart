@@ -31,9 +31,9 @@ class HomeOfficerViewmodel extends ChangeNotifier {
   Future<void> getOnGoingComplaints() async {
     try {
       final response =
-          await _complaintRepository.getComplaintByStatus('onGoing');
+          await _complaintRepository.getComplaintByStatus('officer/ongoing');
       if (response.statCode == 200) {
-        allComplaints = List<ComplaintModel>.from(
+        onGoingComplaints = List<ComplaintModel>.from(
           jsonDecode(response.body)['data']
               .map((e) => GetComplaintResponse.fromJson(e))
               .map((e) => ComplaintModel.fromResponse(e)),
@@ -48,9 +48,9 @@ class HomeOfficerViewmodel extends ChangeNotifier {
   Future<void> getReceiveComplaints() async {
     try {
       final response =
-          await _complaintRepository.getComplaintByStatus('receive');
+          await _complaintRepository.getComplaintByStatus('officer/receive');
       if (response.statCode == 200) {
-        allComplaints = List<ComplaintModel>.from(
+        receiveComplaints = List<ComplaintModel>.from(
           jsonDecode(response.body)['data']
               .map((e) => GetComplaintResponse.fromJson(e))
               .map((e) => ComplaintModel.fromResponse(e)),

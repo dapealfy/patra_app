@@ -10,8 +10,10 @@ class ComplaintNetwork {
 
   static const _getAllComplaints = 'api/complaint/get';
   static const _getComplaintById = 'api/complaint/{id}';
-  static const _getComplaintByStatus = 'api/complaint/officer';
+  static const _getComplaintByStatus = 'api/complaint';
   static const _createComplaint = 'api/submit-complaint';
+  static const _updateComplaint = 'api/update-complaint';
+  static const _acceptComplaint = 'api/complaint/officer/accept-complaint';
 
   Future<JsonResponse<GetComplaintResponse>> getAllComplaints() async {
     final response = await _network.get(_getAllComplaints,
@@ -64,13 +66,13 @@ class ComplaintNetwork {
     String? sparepart,
     String? handlingDescription,
     File? handlingAsset,
-    String? status,
+    required String status,
   }) async {
-    final response = await _network.post('$_createComplaint/$id',
+    final response = await _network.post('$_updateComplaint/$id',
         body: {
-          'sparepart': sparepart,
-          'handling_description': handlingDescription,
-          'status': status,
+          'sparepart': sparepart.toString(),
+          'handling_description': handlingDescription.toString(),
+          'status': status.toString(),
         },
         files: [
           FileModel(
@@ -82,6 +84,15 @@ class ComplaintNetwork {
         ],
         options: await _network.baseOption);
 
+    return ApiResponse.json(response, GetComplaintResponse.fromJson);
+  }
+
+  Future<JsonResponse<GetComplaintResponse>> acceptComplaint(int id) async {
+    final response = await _network.post('$_acceptComplaint/$id',
+        body: {
+          'status': 'ongoing',
+        },
+        options: await _network.baseOption);
     return ApiResponse.json(response, GetComplaintResponse.fromJson);
   }
 }

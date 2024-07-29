@@ -14,7 +14,6 @@ class ProfileViewModel extends ChangeNotifier {
 
   void initialize() async{
     fcmToken = await FirebaseMessaging.instance.getToken() ?? '';
-    print(fcmToken);
     notifyListeners();
   }
 }

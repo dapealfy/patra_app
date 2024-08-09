@@ -50,6 +50,40 @@ class RegisterViewModel extends ChangeNotifier {
       if (response.statCode == 200) {
         navigatorKey.currentContext!.goNamed(RoutesName.login);
       }
+    } else {
+      if(!emailController.text.isNotEmpty){
+        ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Email Masih Kosong',
+            ),
+          ),
+        );
+      } else if(!isEmailValid){
+        ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Format Email Salah',
+            ),
+          ),
+        );
+      } else if(passwordController.text.length < 8){
+        ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Password Kurang dari 8 karakter',
+            ),
+          ),
+        );
+      } else if(passwordController.text != confirmPasswordController.text){
+        ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Password Tidak Sama',
+            ),
+          ),
+        );
+      }
     }
   }
 }

@@ -45,15 +45,50 @@ class LoginViewModel extends ChangeNotifier {
           emailController.text, passwordController.text);
       navigatorKey.currentContext!.read<ProfileViewModel>().userModel =
           UserModel.fromResponse(response.data!);
+      isLoading = false;
+      if (response.statCode != 200) {
+        ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Terjadi Kesalahan, Data Tidak Valid',
+            ),
+          ),
+        );
+      }
       storage.setToken(response.jsonBody!['access_token']);
       storage.setRole(response.jsonBody!['user']['role']);
-      isLoading = false;
       if (response.statCode == 200 &&
           response.jsonBody!['user']['role'] == 'customer') {
         navigatorKey.currentContext!.goNamed(RoutesName.homeCustomer);
       } else if (response.statCode == 200 &&
           response.jsonBody!['user']['role'] == 'petugas') {
         navigatorKey.currentContext!.goNamed(RoutesName.homeOfficer);
+      }
+    } else {
+      if(!emailController.text.isNotEmpty){
+        ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Email masih kosong',
+            ),
+          ),
+        );
+      } else if(!isEmailValid){
+        ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Format email salah',
+            ),
+          ),
+        );
+      } else if(passwordController.text.length < 8){
+        ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Password kurang dari 8 karakter',
+            ),
+          ),
+        );
       }
     }
   }

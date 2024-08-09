@@ -151,7 +151,7 @@ class _DetailComplaintScreenState extends State<DetailComplaintScreen> {
                         ),
                         if (vm.selectedComplaint?.status == 'done') ...[
                           Text(
-                            'Sparepart',
+                            'Jenis Keluhan',
                             style: AppTextStyles.caption1.copyWith(
                               fontWeight: FontWeight.bold,
                             ),

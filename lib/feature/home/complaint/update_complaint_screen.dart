@@ -109,7 +109,7 @@ class UpdateComplaintScreen extends StatelessWidget {
                     height: 36,
                   ),
                   Text(
-                    'Sparepart',
+                    'Jenis Keluhan',
                     style: AppTextStyles.caption1.copyWith(
                       fontWeight: FontWeight.bold,
                     ),

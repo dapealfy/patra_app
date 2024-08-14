@@ -224,56 +224,72 @@ class _DetailComplaintScreenState extends State<DetailComplaintScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          Theme(
-                            data: ThemeData(
-                              colorScheme:
-                                  const ColorScheme.light(primary: primaryBlue),
+                          if (vm.selectedComplaint?.status != 'completed') ...[
+                            Theme(
+                              data: ThemeData(
+                                colorScheme: const ColorScheme.light(
+                                    primary: primaryBlue),
+                              ),
+                              child: Stepper(
+                                physics: const NeverScrollableScrollPhysics(),
+                                currentStep: currentStep,
+                                controlsBuilder: (BuildContext context,
+                                    ControlsDetails details) {
+                                  return Container();
+                                },
+                                steps: <Step>[
+                                  Step(
+                                    title: Text('Keluhan Diterima',
+                                        style: AppTextStyles.caption1),
+                                    content: Container(),
+                                    isActive: currentStep >= 0,
+                                    state: currentStep > 0
+                                        ? StepState.complete
+                                        : StepState.indexed,
+                                  ),
+                                  Step(
+                                    title: Text('Sedang di Kerjakan',
+                                        style: AppTextStyles.caption1),
+                                    content: Container(),
+                                    isActive: currentStep >= 1,
+                                    state: currentStep > 1
+                                        ? StepState.complete
+                                        : StepState.indexed,
+                                  ),
+                                  Step(
+                                    title: Text('Pekerjaan telah Selesai',
+                                        style: AppTextStyles.caption1),
+                                    content: Container(),
+                                    isActive: currentStep >= 2,
+                                    state: currentStep > 2
+                                        ? StepState.complete
+                                        : StepState.indexed,
+                                  ),
+                                ],
+                              ),
                             ),
-                            child: Stepper(
-                              physics: const NeverScrollableScrollPhysics(),
-                              currentStep: currentStep,
-                              controlsBuilder: (BuildContext context,
-                                  ControlsDetails details) {
-                                return Container();
+                          ] else ...[
+                            Text('Keluhan Terselesaikan', style: AppTextStyles.caption1),
+                          ],
+                          Visibility(
+                            visible: vm.selectedComplaint?.status == 'done',
+                            child: PrimaryButton(
+                              title: 'SELESAIKAN KELUHAN',
+                              isLoading: vm.isLoading,
+                              onPressed: () {
+                                vm.acceptComplaint('completed');
                               },
-                              steps: <Step>[
-                                Step(
-                                  title: Text('Keluhan Diterima',
-                                      style: AppTextStyles.caption1),
-                                  content: Container(),
-                                  isActive: currentStep >= 0,
-                                  state: currentStep > 0
-                                      ? StepState.complete
-                                      : StepState.indexed,
-                                ),
-                                Step(
-                                  title: Text('Sedang di Kerjakan',
-                                      style: AppTextStyles.caption1),
-                                  content: Container(),
-                                  isActive: currentStep >= 1,
-                                  state: currentStep > 1
-                                      ? StepState.complete
-                                      : StepState.indexed,
-                                ),
-                                Step(
-                                  title: Text('Pekerjaan telah Selesai',
-                                      style: AppTextStyles.caption1),
-                                  content: Container(),
-                                  isActive: currentStep >= 2,
-                                  state: currentStep > 2
-                                      ? StepState.complete
-                                      : StepState.indexed,
-                                ),
-                              ],
                             ),
                           ),
+                          const SizedBox(height: 48),
                         ] else ...[
                           Visibility(
                             visible: vm.selectedComplaint?.status == 'receive',
                             child: PrimaryButton(
                               title: 'TERIMA',
+                              isLoading: vm.isLoading,
                               onPressed: () {
-                                vm.acceptComplaint();
+                                vm.acceptComplaint('ongoing');
                               },
                             ),
                           ),

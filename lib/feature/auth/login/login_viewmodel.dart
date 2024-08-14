@@ -7,7 +7,6 @@ import 'package:app/feature/profile/profile_viewmodel.dart';
 import 'package:app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:logger/web.dart';
 import 'package:provider/provider.dart';
 
 class LoginViewModel extends ChangeNotifier {

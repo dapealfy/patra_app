@@ -12,6 +12,14 @@ class DetailComplaintViewmodel extends ChangeNotifier {
   final _complaintRepository = serviceLocator.get<ComplaintRepository>();
 
   ComplaintModel? selectedComplaint;
+  bool _isLoading = false;
+
+  bool get isLoading => _isLoading;
+
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
 
   Future<void> getComplaint(int id) async {
     final response = await _complaintRepository.getComplaintById(id);
@@ -23,8 +31,13 @@ class DetailComplaintViewmodel extends ChangeNotifier {
     }
   }
 
-  void acceptComplaint() {
-    _complaintRepository.acceptComplaint(selectedComplaint!.id).then((value) {
+  void acceptComplaint(String status) {
+    isLoading = true;
+    notifyListeners();
+    _complaintRepository
+        .acceptComplaint(selectedComplaint!.id, status)
+        .then((value) {
+      isLoading = false;
       notifyListeners();
       navigatorKey.currentContext!.pop();
     });

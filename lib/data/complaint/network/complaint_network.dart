@@ -87,10 +87,10 @@ class ComplaintNetwork {
     return ApiResponse.json(response, GetComplaintResponse.fromJson);
   }
 
-  Future<JsonResponse<GetComplaintResponse>> acceptComplaint(int id) async {
+  Future<JsonResponse<GetComplaintResponse>> acceptComplaint(int id, String status) async {
     final response = await _network.post('$_acceptComplaint/$id',
         body: {
-          'status': 'ongoing',
+          'status': status,
         },
         options: await _network.baseOption);
     return ApiResponse.json(response, GetComplaintResponse.fromJson);

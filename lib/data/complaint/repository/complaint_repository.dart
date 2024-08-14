@@ -44,6 +44,6 @@ class ComplaintRepository {
         status: 'done',
       );
 
-  Future<JsonResponse<GetComplaintResponse>> acceptComplaint(int id) async =>
-      await _complaintNetwork.acceptComplaint(id);
+  Future<JsonResponse<GetComplaintResponse>> acceptComplaint(int id, String status) async =>
+      await _complaintNetwork.acceptComplaint(id, status);
 }

@@ -23,6 +23,8 @@ class GetComplaintResponse {
   final String? handlingDescription;
   @JsonKey(name: 'status')
   final String? status;
+  @JsonKey(name: 'technician_name')
+  final String? technicianName;
   @JsonKey(name: 'user_handler_id')
   final String? userHandlerId;
   @JsonKey(name: 'created_at')
@@ -40,12 +42,14 @@ class GetComplaintResponse {
     this.sparepart,
     this.handlingDescription,
     this.status,
+    this.technicianName,
     this.userHandlerId,
     this.createdAt,
     this.updatedAt,
   });
 
-  factory GetComplaintResponse.fromJson(Json json) => _$GetComplaintResponseFromJson(json);
+  factory GetComplaintResponse.fromJson(Json json) =>
+      _$GetComplaintResponseFromJson(json);
 
   Json toJson() => _$GetComplaintResponseToJson(this);
 }

@@ -16,6 +16,16 @@ class RegisterViewModel extends ChangeNotifier {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController alamatRumahController = TextEditingController();
+  TextEditingController noTelpController = TextEditingController();
+
+  String _role = 'customer';
+  String get role => _role;
+
+  set role(String value) {
+    _role = value;
+    notifyListeners();
+  }
 
   bool _obscureText = true;
   bool get obscureText => _obscureText;
@@ -41,17 +51,23 @@ class RegisterViewModel extends ChangeNotifier {
         isEmailValid &&
         passwordController.text.length >= 8 &&
         passwordController.text == confirmPasswordController.text) {
-          isLoading = true;
-      final response = await _authRepository.registerUser(nameController.text,
-          emailController.text, nikController.text, passwordController.text);
+      isLoading = true;
+      final response = await _authRepository.registerUser(
+          nameController.text,
+          emailController.text,
+          nikController.text,
+          passwordController.text,
+          alamatRumahController.text,
+          noTelpController.text,
+          role);
       navigatorKey.currentContext!.read<ProfileViewModel>().userModel =
           UserModel.fromResponse(response.data!);
-          isLoading = false;
+      isLoading = false;
       if (response.statCode == 200) {
         navigatorKey.currentContext!.goNamed(RoutesName.login);
       }
     } else {
-      if(!emailController.text.isNotEmpty){
+      if (!emailController.text.isNotEmpty) {
         ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
           const SnackBar(
             content: Text(
@@ -59,7 +75,7 @@ class RegisterViewModel extends ChangeNotifier {
             ),
           ),
         );
-      } else if(!isEmailValid){
+      } else if (!isEmailValid) {
         ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
           const SnackBar(
             content: Text(
@@ -67,7 +83,7 @@ class RegisterViewModel extends ChangeNotifier {
             ),
           ),
         );
-      } else if(passwordController.text.length < 8){
+      } else if (passwordController.text.length < 8) {
         ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
           const SnackBar(
             content: Text(
@@ -75,7 +91,7 @@ class RegisterViewModel extends ChangeNotifier {
             ),
           ),
         );
-      } else if(passwordController.text != confirmPasswordController.text){
+      } else if (passwordController.text != confirmPasswordController.text) {
         ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
           const SnackBar(
             content: Text(

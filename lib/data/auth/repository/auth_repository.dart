@@ -12,12 +12,18 @@ class AuthRepository {
     String email,
     String nik,
     String password,
+    String alamatRumah,
+    String noTelp,
+    String role,
   ) async =>
       await _authNetwork.postRegister(
         name,
         email,
         nik,
         password,
+        alamatRumah,
+        noTelp,
+        role,
       );
 
   Future<JsonResponse<PostUserResponse>> loginUser(

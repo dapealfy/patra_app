@@ -31,7 +31,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 56.h,),
+                SizedBox(
+                  height: 8.h,
+                ),
                 Text(
                   'REGISTER',
                   style: AppTextStyles.headline.copyWith(
@@ -106,16 +108,87 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   height: 20.h,
                 ),
                 Consumer<RegisterViewModel>(
-                    builder: (_, registerVm, __) {
-                      return SizedBox(
-                        width: 250,
-                        child: PrimaryButton(
-                          title: 'MASUK',
-                          isLoading: registerVm.isLoading,
-                          onPressed: () => registerVm.register(),
+                  builder: (_, vm, __) {
+                    return AppTextField(
+                      controller: vm.alamatRumahController,
+                      hintText: 'Alamat Rumah',
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Consumer<RegisterViewModel>(
+                  builder: (_, vm, __) {
+                    return AppTextField(
+                      controller: vm.noTelpController,
+                      hintText: 'No Telepon',
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Consumer<RegisterViewModel>(builder: (_, vm, __) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          vm.role = 'petugas';
+                        },
+                        child: Row(
+                          children: [
+                            Radio(
+                              value: 'petugas',
+                              groupValue: vm.role,
+                              onChanged: (value) {
+                                vm.role = value!;
+                              },
+                            ),
+                            Text(
+                              'Teknisi',
+                              style: AppTextStyles.caption1,
+                            ),
+                          ],
                         ),
-                      );
-                    }),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          vm.role = 'customer';
+                        },
+                        child: Row(
+                          children: [
+                            Radio(
+                              value: 'customer',
+                              groupValue: vm.role,
+                              onChanged: (value) {
+                                vm.role = value!;
+                              },
+                            ),
+                            Text(
+                              'Penghuni',
+                              style: AppTextStyles.caption1,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  );
+                }),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Consumer<RegisterViewModel>(builder: (_, registerVm, __) {
+                  return SizedBox(
+                    width: 250,
+                    child: PrimaryButton(
+                      title: 'KIRIM/DAFTAR',
+                      isLoading: registerVm.isLoading,
+                      onPressed: () => registerVm.register(),
+                    ),
+                  );
+                }),
                 SizedBox(
                   height: 70.h,
                 ),

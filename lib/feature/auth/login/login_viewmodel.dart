@@ -54,6 +54,7 @@ class LoginViewModel extends ChangeNotifier {
           ),
         );
       }
+      print(response.jsonBody);
       storage.setToken(response.jsonBody!['access_token']);
       storage.setRole(response.jsonBody!['user']['role']);
       if (response.statCode == 200 &&

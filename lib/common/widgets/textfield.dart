@@ -7,6 +7,7 @@ class AppTextField extends StatelessWidget {
   final bool obscureText;
   final bool? isSuffixIconVisible;
   final VoidCallback? onTapSuffix;
+  final IconData? suffixIcon;
   final String hintText;
   final int maxLines;
   const AppTextField({
@@ -17,6 +18,7 @@ class AppTextField extends StatelessWidget {
     this.isSuffixIconVisible,
     this.onTapSuffix,
     this.maxLines = 1,
+    this.suffixIcon,
   });
 
   @override
@@ -36,12 +38,14 @@ class AppTextField extends StatelessWidget {
             color: secondary,
           ),
           suffixIcon: isSuffixIconVisible == true
-              ? InkWell(
-                  onTap: onTapSuffix,
-                  child: obscureText == true
-                      ? const Icon(Icons.visibility_off)
-                      : const Icon(Icons.visibility),
-                )
+              ? suffixIcon != null
+                  ? Icon(suffixIcon)
+                  : InkWell(
+                      onTap: onTapSuffix,
+                      child: obscureText == true
+                          ? const Icon(Icons.visibility_off)
+                          : const Icon(Icons.visibility),
+                    )
               : null,
         ),
         style: AppTextStyles.caption1,

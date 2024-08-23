@@ -1,4 +1,3 @@
-
 import 'package:app/data/complaint/network/dto_get_complaint_response.dart';
 
 class ComplaintModel {
@@ -14,6 +13,7 @@ class ComplaintModel {
   final String userHandlerId;
   final String createdAt;
   final String updatedAt;
+  final String? technicianName;
 
   ComplaintModel({
     required this.id,
@@ -28,6 +28,7 @@ class ComplaintModel {
     required this.userHandlerId,
     required this.createdAt,
     required this.updatedAt,
+    this.technicianName,
   });
 
   factory ComplaintModel.fromResponse(GetComplaintResponse response) {
@@ -44,7 +45,7 @@ class ComplaintModel {
       userHandlerId: response.userHandlerId ?? '',
       createdAt: response.createdAt ?? '',
       updatedAt: response.updatedAt ?? '',
+      technicianName: response.technicianName ?? '',
     );
   }
 }
-

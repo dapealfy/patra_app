@@ -14,8 +14,8 @@ class UpdateComplaintScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) =>
-          UpdateComplaintViewmodel()..getComplaint(int.tryParse(complaintId) ?? 0),
+      create: (context) => UpdateComplaintViewmodel()
+        ..getComplaint(int.tryParse(complaintId) ?? 0),
       child: Consumer<UpdateComplaintViewmodel>(builder: (context, vm, child) {
         return Scaffold(
           backgroundColor: Colors.white,
@@ -26,7 +26,7 @@ class UpdateComplaintScreen extends StatelessWidget {
             backgroundColor: primaryGreen,
             elevation: 0,
             title: Text(
-              'Ajukan Keluhan',
+              'Tugas Keluhan Masuk',
               style: AppTextStyles.body1.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -117,13 +117,129 @@ class UpdateComplaintScreen extends StatelessWidget {
                   const SizedBox(
                     height: 4,
                   ),
-                  Selector<UpdateComplaintViewmodel, TextEditingController>(
-                    selector: (_, vm) => vm.sparepartController,
-                    builder: (_, nomorRumahController, __) {
-                      return AppTextField(
-                        controller: nomorRumahController,
-                        hintText: '',
-                      );
+                  Consumer<UpdateComplaintViewmodel>(
+                    builder: (_, vm, __) {
+                      return vm.isJenisKeluhanActive
+                          ? Container(
+                              color: backgroundBlue,
+                              padding: const EdgeInsets.all(12),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      vm.sparepartController.text = 'Elektrik';
+                                      vm.isJenisKeluhanActive = false;
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(bottom: 8),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Elektrik',
+                                              style: AppTextStyles.caption1),
+                                          vm.sparepartController.text ==
+                                                  'Elektrik'
+                                              ? Icon(Icons.check,
+                                                  color: Colors.green, size: 20)
+                                              : Container()
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      vm.sparepartController.text = 'HVAC';
+                                      vm.isJenisKeluhanActive = false;
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(bottom: 8),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('HVAC',
+                                              style: AppTextStyles.caption1),
+                                          vm.sparepartController.text == 'HVAC'
+                                              ? Icon(Icons.check,
+                                                  color: Colors.green, size: 20)
+                                              : Container()
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      vm.sparepartController.text = 'Plumbing';
+                                      vm.isJenisKeluhanActive = false;
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(bottom: 8),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Plumbing',
+                                              style: AppTextStyles.caption1),
+                                          vm.sparepartController.text ==
+                                                  'Plumbing'
+                                              ? Icon(Icons.check,
+                                                  color: Colors.green, size: 20)
+                                              : Container()
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      vm.sparepartController.text = 'Lainnya';
+                                      vm.isJenisKeluhanActive = false;
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(bottom: 8),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Lainnya',
+                                              style: AppTextStyles.caption1),
+                                          vm.sparepartController.text ==
+                                                  'Lainnya'
+                                              ? Icon(Icons.check,
+                                                  color: Colors.green, size: 20)
+                                              : Container()
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          : Column(
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    vm.isJenisKeluhanActive = true;
+                                  },
+                                  child: IgnorePointer(
+                                    child: AppTextField(
+                                      controller: vm.sparepartController,
+                                      hintText: 'Jenis Keluhan',
+                                      isSuffixIconVisible: true,
+                                      suffixIcon: Icons.keyboard_arrow_down,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 12,),
+                                vm.sparepartController.text == 'Lainnya'
+                                    ? AppTextField(
+                                        controller: vm.sparepartRealController,
+                                        hintText: 'Masukkan Jenis Keluhan',
+                                      )
+                                    : Container()
+                              ],
+                            );
                     },
                   ),
                   const SizedBox(

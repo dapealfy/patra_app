@@ -14,10 +14,20 @@ class UpdateComplaintViewmodel extends ChangeNotifier {
   late final ComplaintRepository _complaintRepository =
       serviceLocator<ComplaintRepository>();
   TextEditingController sparepartController = TextEditingController();
+  TextEditingController sparepartRealController = TextEditingController();
   TextEditingController laporanPengerjaanController = TextEditingController();
   File? handlingImage;
 
   ComplaintModel? selectedComplaint;
+
+  bool _isJenisKeluhanActive = false;
+
+  bool get isJenisKeluhanActive => _isJenisKeluhanActive;
+
+  set isJenisKeluhanActive(bool value) {
+    _isJenisKeluhanActive = value;
+    notifyListeners();
+  }
 
   Future<void> getComplaint(int id) async {
     final response = await _complaintRepository.getComplaintById(id);
@@ -41,7 +51,7 @@ class UpdateComplaintViewmodel extends ChangeNotifier {
     if (handlingImage != null) {
       _complaintRepository
           .updateComplaint(
-        sparepart: sparepartController.text,
+        sparepart: sparepartController.text == 'Lainnya' ? sparepartRealController.text : sparepartController.text,
         handlingDescription: laporanPengerjaanController.text,
         handlingAsset: handlingImage!,
         id: selectedComplaint!.id,

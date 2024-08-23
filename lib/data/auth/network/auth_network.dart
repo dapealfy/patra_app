@@ -31,13 +31,18 @@ class AuthNetwork {
     String email,
     String nik,
     String password,
+    String alamatRumah,
+    String noTelp,
+    String role,
   ) async {
     final request = {
       'name': name,
       'email': email,
       'nik': nik,
       'password': password,
-      'role': 'customer',
+      'alamat_rumah': alamatRumah,
+      'no_telp': noTelp,
+      'role': role,
     };
     final response = await _network.post(_userRegister,
         body: request, options: _network.baseHeader);

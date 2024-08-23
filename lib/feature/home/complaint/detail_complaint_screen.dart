@@ -6,6 +6,7 @@ import 'package:app/feature/home/complaint/detail_complaint_viewmodel.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DetailComplaintScreen extends StatefulWidget {
   final String complaintId;
@@ -66,12 +67,17 @@ class _DetailComplaintScreenState extends State<DetailComplaintScreen> {
                   backgroundColor: appbarColor,
                   elevation: 0,
                   title: Text(
-                    'Progress Keluhan',
-                    style: AppTextStyles.body1.copyWith(
+                    'Progress Pengerjaan Keluhan',
+                    style: AppTextStyles.caption1.copyWith(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  actions: [
+                    IconButton(onPressed: (){
+                      launchUrl(Uri.parse('https://api.whatsapp.com/send/?phone=6285158884084&text=Halo%20Saya%20Butuh%20Bantuan%20Keluhan&type=phone_number&app_absent=0'), mode: LaunchMode.externalApplication);
+                    }, icon: Icon(Icons.headphones, color: Colors.white,))
+                  ],
                   centerTitle: true,
                 ),
                 body: Padding(
@@ -219,6 +225,26 @@ class _DetailComplaintScreenState extends State<DetailComplaintScreen> {
                         ],
                         if (isCustomer == true) ...[
                           Text(
+                            'Nama Teknisi',
+                            style: AppTextStyles.caption1.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          ),
+                          Container(
+                            color: backgroundDark,
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 12),
+                            child: Text(vm.selectedComplaint?.technicianName ?? '',
+                                style: AppTextStyles.caption1),
+                          ),
+                          const SizedBox(
+                            height: 24,
+                          ),
+                          Text(
                             'Status Ajuan Keluhan',
                             style: AppTextStyles.caption1.copyWith(
                               fontWeight: FontWeight.bold,
@@ -269,7 +295,8 @@ class _DetailComplaintScreenState extends State<DetailComplaintScreen> {
                               ),
                             ),
                           ] else ...[
-                            Text('Keluhan Terselesaikan', style: AppTextStyles.caption1),
+                            Text('Keluhan Terselesaikan',
+                                style: AppTextStyles.caption1),
                           ],
                           Visibility(
                             visible: vm.selectedComplaint?.status == 'done',

@@ -82,6 +82,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Consumer<RegisterViewModel>(
                   builder: (_, vm, __) {
                     return AppTextField(
+                      controller: vm.alamatRumahController,
+                      hintText: 'Alamat Rumah',
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Consumer<RegisterViewModel>(
+                  builder: (_, vm, __) {
+                    return AppTextField(
+                      controller: vm.noTelpController,
+                      hintText: 'No Telepon',
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Consumer<RegisterViewModel>(
+                  builder: (_, vm, __) {
+                    return AppTextField(
                       controller: vm.passwordController,
                       hintText: 'Password',
                       obscureText: vm.obscureText,
@@ -101,28 +123,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       obscureText: vm.obscureText,
                       isSuffixIconVisible: true,
                       onTapSuffix: () => vm.obscureText = !vm.obscureText,
-                    );
-                  },
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Consumer<RegisterViewModel>(
-                  builder: (_, vm, __) {
-                    return AppTextField(
-                      controller: vm.alamatRumahController,
-                      hintText: 'Alamat Rumah',
-                    );
-                  },
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Consumer<RegisterViewModel>(
-                  builder: (_, vm, __) {
-                    return AppTextField(
-                      controller: vm.noTelpController,
-                      hintText: 'No Telepon',
                     );
                   },
                 ),
@@ -183,7 +183,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   return SizedBox(
                     width: 250,
                     child: PrimaryButton(
-                      title: 'KIRIM/DAFTAR',
+                      title: 'DAFTAR',
                       isLoading: registerVm.isLoading,
                       onPressed: () => registerVm.register(),
                     ),
